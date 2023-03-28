@@ -14,7 +14,7 @@ To install the password wallet, simply clone this repository and install the req
 
 git clone https://github.com/Webbslinger57/Python-Password-Wallet.git 
 pip install -r requirements.txt 
-python main.py
+python code/main.py
 
 
 ## Contributing
