@@ -1,5 +1,6 @@
 import customtkinter
 from passworManager import PasswordManager
+from user import User
 
 customtkinter.set_appearance_mode("dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -8,7 +9,7 @@ app = customtkinter.CTk()
 app.geometry("520x500")
 app.resizable(False, False)
 
-
+user = User()
 ##################################################################################################
 #                                            Login View                                          #
 ##################################################################################################
@@ -18,10 +19,17 @@ def main():
     def button_callback():
         print("validating username:", entry_1.get())
         print("validating Password:", entry_2.get())
-        if entry_1.get() == "admin" and entry_2.get() == "admin":
+        if PasswordManager.authenticateUser(entry_1.get(), entry_2.get()):
+            user.username = entry_1.get()
+            user.password = entry_2.get()
             print("Login Successful")
             frame_1.destroy()
             home_view()
+        else:
+            label_1.configure(text="Invalid username or password")
+            entry_1.delete(0, "end")
+            entry_2.delete(0, "end")
+            entry_1.focus()
     
     frame_1 = customtkinter.CTkFrame(master=app)
     frame_1.pack(pady=20, padx=60, fill="both", expand=True)
@@ -73,7 +81,7 @@ def home_view():
     view_passwords_btn.grid(row=2, column=1, padx=10, pady=10)
     
     scroll_frame = customtkinter.CTkScrollableFrame(master=home_frame, label_text="Accounts")
-    scroll_frame.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
+    scroll_frame.grid(row=3, column=0, columnspan=3, pady=10)
     scroll_switches = []
     accounts = PasswordManager.getPasswords()
     for a in accounts:

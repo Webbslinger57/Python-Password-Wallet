@@ -7,6 +7,7 @@ import hashlib
 import settings
 from cryptography.fernet import Fernet
 import os
+import base64
 
 KEY_FILE = 'secret.key'
 
@@ -27,13 +28,33 @@ def loadKey():
 # load or generate the secret key
 secretKey = loadKey()
 
-# create a Fernet object with the secret key
-f = Fernet(secretKey)
+def get_fernet_key(hashed_key):
+    # encode the hashed key using base64
+    encoded_key = base64.urlsafe_b64encode(hashed_key.encode())
+    # truncate the encoded key to 32 bytes
+    truncated_key = encoded_key[:32]
+    # pad the truncated key with zeros if necessary
+    fernet_key = truncated_key.ljust(32, b'\0')
+    # return the Fernet key
+    return fernet_key
 
 class PasswordManager:
+    f = None
+    def authenticateUser(username, password):
+        if username == "admin" and password == "admin":
+            #hash the secret key with the username and password
+            combinedKey = secretKey + username.encode() + password.encode()
+            hashedKey = hashlib.sha256(combinedKey).hexdigest()
+            fernet_key = get_fernet_key(hashedKey)
+            print(f'Fernet key: {fernet_key}')
+            PasswordManager.f = Fernet(secretKey) # this needs to be the fernet key, but it's not working
+            return True
+        else:
+            return False
+    
     def encryptPassword(password):
         # encrypt password using Fernet
-        encrypted_password = f.encrypt(password.encode())
+        encrypted_password = PasswordManager.f.encrypt(password.encode())
         return encrypted_password
     
     def addPassword(plain_password):
@@ -45,7 +66,7 @@ class PasswordManager:
         
     def decryptPassword(encrypted_password):
         # decrypt the password
-        decrypted_password = f.decrypt(encrypted_password).decode()
+        decrypted_password = PasswordManager.f.decrypt(encrypted_password)
         return decrypted_password
     
     def getPasswords():
