@@ -1,6 +1,7 @@
 # Python Password Wallet
 
 A simple and secure password wallet built with Python and CustomTkinter.
+![image](https://user-images.githubusercontent.com/94585127/228687433-0bfd766b-92b6-4f2d-97fe-ffdd5e6517ba.png)
 
 ## Features
 
@@ -10,7 +11,11 @@ A simple and secure password wallet built with Python and CustomTkinter.
 - All information stored in Sqlite database
 - All stored passwords are encrypted
 - Login credentials are hashed
-- Planned support for searching through accounts
+
+## Planned Features
+- Support for searching through accounts
+- Ability to edit/delete account entries
+- Ability to modify theme
 
 ## Installation
 
