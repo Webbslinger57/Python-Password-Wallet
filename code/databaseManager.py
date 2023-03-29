@@ -24,19 +24,19 @@ class DatabaseManager:
     def check_for_main_account(self):
         main_account = self.c.execute("SELECT * FROM MainAccount").fetchone()
         if main_account is None:
-            print(main_account)
+            #print(main_account)
             return False
         else:
-            print("Main account found.")
+            #print("Main account found.")
             return True  
     
     def authenticate_main_account(self, p_username, p_password):
         if self.c.execute("SELECT * FROM MainAccount"):
             account_info = self.c.execute("SELECT * FROM MainAccount").fetchone()
             username, hashed_password = account_info[1], account_info[2]
-            print(PasswordManager.checkPassword(p_password, hashed_password))
+            #print(PasswordManager.checkPassword(p_password, hashed_password))
             if PasswordManager.checkPassword(p_password, hashed_password):
-                print("Main account authenticated.")
+                #print("Main account authenticated.")
                 return True
         else:
             return False
@@ -45,7 +45,7 @@ class DatabaseManager:
         hashed_password = PasswordManager.hashPassword(password)
         self.c.execute("INSERT INTO MainAccount (username, password, hint) VALUES (?, ?, ?)", (username, hashed_password, hint))
         self.conn.commit()
-        print("Main account created.")
+        #print("Main account created.")
 
     def add_account(self, note, username, password, url):
         encrypted_password = PasswordManager.encryptPassword(password)

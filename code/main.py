@@ -21,9 +21,9 @@ def register_view():
 
     
     def button_callback():
-        print("Adding Note:", note_entry.get())
-        print("Adding Username:", entry_1.get())
-        print("Adding Password:", entry_2.get())
+        # print("Adding Note:", note_entry.get())
+        # print("Adding Username:", entry_1.get())
+        # print("Adding Password:", entry_2.get())
         if entry_2.get() == entry_3.get():
             AccountDb.create_main_account(entry_1.get(), entry_2.get(), note_entry.get())
             frame_1.destroy()
@@ -60,18 +60,18 @@ def main():
     app.title("Login")
     
     if AccountDb.check_for_main_account() == False:
-        print("No main account found, creating one.")
+        # print("No main account found, creating one.")
         register_view()
         
     
     def button_callback():
-        print("validating username:", entry_1.get())
-        print("validating Password:", entry_2.get())
+        # print("validating username:", entry_1.get())
+        # print("validating Password:", entry_2.get())
         if AccountDb.authenticate_main_account(entry_1.get(), entry_2.get()):
             PasswordManager.createFernet(entry_1.get(), entry_2.get())
             user.username = entry_1.get()
             user.password = entry_2.get()
-            print("Login Successful")
+            #print("Login Successful")
             frame_1.destroy()
             home_view()
         else:
@@ -153,12 +153,12 @@ def add_password_view():
         home_view()
     
     def button_callback():
-        print("Adding Note:", note_entry.get())
-        print("Adding Username:", entry_1.get())
+        # print("Adding Note:", note_entry.get())
+        # print("Adding Username:", entry_1.get())
         
         plain_password = entry_2.get()
         AccountDb.add_account(note_entry.get(), entry_1.get(), plain_password, 'www.google.com')
-        print("Adding Password:", entry_2.get())
+        #print("Adding Password:", entry_2.get())
         back_click()
         
     frame_1 = customtkinter.CTkFrame(master=app)
