@@ -20,6 +20,9 @@ git clone https://github.com/Webbslinger57/Python-Password-Wallet.git
 pip install -r requirements.txt 
 python code/main.py
 
+To build using pyinstaller, follow the instructions in the link below:
+https://github.com/TomSchimansky/CustomTkinter/wiki/Packaging#windows-pyinstaller-auto-py-to-exe
+
 
 ## Contributing
 
