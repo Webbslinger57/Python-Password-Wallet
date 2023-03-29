@@ -30,24 +30,25 @@ secretKey = loadKey()
 
 def get_fernet_key(hashed_key):
     # encode the hashed key using base64
-    encoded_key = base64.urlsafe_b64encode(hashed_key.encode())
-    # truncate the encoded key to 32 bytes
-    truncated_key = encoded_key[:32]
-    # pad the truncated key with zeros if necessary
-    fernet_key = truncated_key.ljust(32, b'\0')
+    fernet_key = base64.urlsafe_b64encode(hashed_key.encode()[:32])
     # return the Fernet key
     return fernet_key
 
 class PasswordManager:
     f = None
-    def authenticateUser(username, password):
-        if username == "admin" and password == "admin":
-            #hash the secret key with the username and password
-            combinedKey = secretKey + username.encode() + password.encode()
-            hashedKey = hashlib.sha256(combinedKey).hexdigest()
-            fernet_key = get_fernet_key(hashedKey)
-            print(f'Fernet key: {fernet_key}')
-            PasswordManager.f = Fernet(secretKey) # this needs to be the fernet key, but it's not working
+    def createFernet(username, password):
+        #hash the secret key with the username and password
+        combinedKey = username.encode() + password.encode()
+        hashedKey = hashlib.sha256(combinedKey).hexdigest()
+        fernet_key = get_fernet_key(hashedKey)
+        PasswordManager.f = Fernet(fernet_key) # this needs to be the fernet key, but it's not working
+
+    def hashPassword(password):
+        hashedKey = hashlib.sha256(password.encode()).hexdigest()
+        return hashedKey
+
+    def checkPassword(password, hashed_password):
+        if PasswordManager.hashPassword(password) == hashed_password:
             return True
         else:
             return False
@@ -57,28 +58,28 @@ class PasswordManager:
         encrypted_password = PasswordManager.f.encrypt(password.encode())
         return encrypted_password
     
-    def addPassword(plain_password):
-        hashed_password = PasswordManager.encryptPassword(plain_password)
-        # add password to file
-        with open("passwords.txt", "a") as file:
-            file.write(hashed_password.decode() + "\n")
-        file.close()
+    # def addPassword(plain_password):
+    #     hashed_password = PasswordManager.encryptPassword(plain_password)
+    #     # add password to file
+    #     with open("passwords.txt", "a") as file:
+    #         file.write(hashed_password.decode() + "\n")
+    #     file.close()
         
     def decryptPassword(encrypted_password):
         # decrypt the password
         decrypted_password = PasswordManager.f.decrypt(encrypted_password)
         return decrypted_password
     
-    def getPasswords():
-        # get passwords from file
-        with open("passwords.txt", "r") as file:
-            passwords = file.readlines()
-        file.close()
-        decryptedPasswords = []
-        for p in passwords:
-            # strip newline from password
-            p = p.strip()
-            decrypted_password = PasswordManager.decryptPassword(p.encode())
-            decryptedPasswords.append(decrypted_password)
-        return decryptedPasswords
+    # def getPasswords():
+    #     # get passwords from file
+    #     with open("passwords.txt", "r") as file:
+    #         passwords = file.readlines()
+    #     file.close()
+    #     decryptedPasswords = []
+    #     for p in passwords:
+    #         # strip newline from password
+    #         p = p.strip()
+    #         decrypted_password = PasswordManager.decryptPassword(p.encode())
+    #         decryptedPasswords.append(decrypted_password)
+    #     return decryptedPasswords
             
