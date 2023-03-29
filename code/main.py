@@ -23,13 +23,11 @@ def register_view():
     def button_callback():
         print("Adding Note:", note_entry.get())
         print("Adding Username:", entry_1.get())
-        
+        print("Adding Password:", entry_2.get())
         if entry_2.get() == entry_3.get():
-            AccountDb.create_main_account(note_entry.get(), entry_1.get(), entry_2.get())
-            print("Adding Password:", entry_2.get())
+            AccountDb.create_main_account(entry_1.get(), entry_2.get(), note_entry.get())
             frame_1.destroy()
             main()
-        print("Adding Password:", entry_2.get())
         
         
     frame_1 = customtkinter.CTkFrame(master=app)

@@ -41,7 +41,7 @@ class PasswordManager:
         combinedKey = username.encode() + password.encode()
         hashedKey = hashlib.sha256(combinedKey).hexdigest()
         fernet_key = get_fernet_key(hashedKey)
-        PasswordManager.f = Fernet(fernet_key) # this needs to be the fernet key, but it's not working
+        PasswordManager.f = Fernet(fernet_key)
 
     def hashPassword(password):
         hashedKey = hashlib.sha256(password.encode()).hexdigest()
