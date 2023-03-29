@@ -1,6 +1,8 @@
 # Python Password Wallet
 
 A simple and secure password wallet built with Python and CustomTkinter.
+___
+
 ![image](https://user-images.githubusercontent.com/94585127/228687433-0bfd766b-92b6-4f2d-97fe-ffdd5e6517ba.png)
 
 ## Features
