@@ -6,6 +6,7 @@ A simple and secure password wallet built with Python and CustomTkinter.
 
 - Store and manage your passwords securely
 - Easy to use interface built with CustomTkinter
+- Encryption using Fernet
 - Planned support for SQLite through an ORM (likely SQLAlchemy)
 
 ## Installation
