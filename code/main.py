@@ -60,7 +60,7 @@ def home_view():
     home_frame = customtkinter.CTkFrame(master=app)
     home_frame.pack(pady=20, padx=20, fill="both", expand=True)
     
-    back_btn = customtkinter.CTkButton(master=home_frame, text="Back", command=back_click)
+    back_btn = customtkinter.CTkButton(master=home_frame, text="Logout", command=back_click)
     back_btn.grid(row=0, column=0, padx=10, pady=10)
     
     add_password_btn = customtkinter.CTkButton(master=home_frame, text="Add Account", command=add_password_click)
@@ -71,6 +71,16 @@ def home_view():
     
     view_passwords_btn = customtkinter.CTkButton(master=home_frame, text="Search", command=search_click)
     view_passwords_btn.grid(row=2, column=1, padx=10, pady=10)
+    
+    scroll_frame = customtkinter.CTkScrollableFrame(master=home_frame, label_text="Accounts")
+    scroll_frame.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
+    scroll_switches = []
+    accounts = PasswordManager.getPasswords()
+    for a in accounts:
+        switch = customtkinter.CTkSwitch(master=scroll_frame, text=a)
+        switch.pack(pady=5, padx=5)
+        scroll_switches.append(switch)
+    
 
 
 ##################################################################################################
@@ -95,7 +105,7 @@ def add_password_view():
     frame_1.pack(pady=20, padx=60, fill="both", expand=True)
 
     back_btn = customtkinter.CTkButton(master=frame_1, text="Back", command=back_click)
-    back_btn.grid(row=0, column=0, padx=10, pady=10)
+    back_btn.pack(padx=10, pady=10)
 
     label_1 = customtkinter.CTkLabel(master=frame_1, justify=customtkinter.LEFT, text="Add a New Account")
     label_1.pack(pady=10, padx=10)
