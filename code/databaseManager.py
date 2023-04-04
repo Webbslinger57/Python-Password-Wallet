@@ -54,7 +54,18 @@ class DatabaseManager:
         
     def get_account(self, id):
         self.c.execute("SELECT * FROM Accounts WHERE account_id = ?", (id,))
-        return self.c.fetchone()
+        account_object = self.c.fetchone()
+        account_info = {"id": account_object[0], "note": account_object[1], "username": account_object[2], "password": PasswordManager.decryptPassword(account_object[3]), "url": account_object[4]}
+        return account_info
+
+    def delete_account(self, id):
+        self.c.execute("DELETE FROM Accounts WHERE account_id = ?", (id,))
+        self.conn.commit()
+        
+    def update_account(self, id, note, username, password, url):
+        encrypted_password = PasswordManager.encryptPassword(password)
+        self.c.execute("UPDATE Accounts SET notes = ?, username = ?, password = ?, url = ? WHERE account_id = ?", (note, username, encrypted_password, url, id))
+        self.conn.commit()
 
     def get_all_accounts(self):
         self.c.execute("SELECT * FROM Accounts")
