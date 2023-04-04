@@ -3,7 +3,8 @@
 A simple and secure password wallet built with Python and CustomTkinter.
 ___
 
-![image](https://user-images.githubusercontent.com/94585127/228687433-0bfd766b-92b6-4f2d-97fe-ffdd5e6517ba.png)
+![image](https://user-images.githubusercontent.com/94585127/229658663-65e14690-0072-4c3f-8088-86b5b27d1f1b.png)
+
 
 ## Features
 
@@ -13,10 +14,11 @@ ___
 - All information stored in Sqlite database
 - All stored passwords are encrypted
 - Login credentials are hashed
+- Ability to edit/delete account entries
 
 ## Planned Features
 - Support for searching through accounts
-- Ability to edit/delete account entries
+- Copy passwords from the home page
 - Ability to modify theme
 
 ## Installation
